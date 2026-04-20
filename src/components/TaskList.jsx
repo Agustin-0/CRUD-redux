@@ -1,9 +1,12 @@
 import React from 'react'
 import TaskItem from './TaskItem';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 
-const TaskList = ({tasks, onToggleComplete, onDeleteTask}) => {
+const TaskList = () => {
+    //hook para seleccionar el estado del store - El estado de tareas!
+    const tasks = useSelector((state) => state.tasks)
 
     //Renderizado condicional
     //empty-state
@@ -17,24 +20,12 @@ const TaskList = ({tasks, onToggleComplete, onDeleteTask}) => {
                 <TaskItem
                 key={task.id}
                 task={task}
-                onDeleteTask={onDeleteTask}
-                onToggleComplete={onToggleComplete}
+// estas dos props onDeleteTask={onDeleteTask} y onToggleComplete={onToggleComplete}
+// se sacan para
                 />
             ))}
         </ul>
     )
-};
-
-TaskList.propTypes = {
-    tasks: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            text: PropTypes.string.isRequired,
-            completed: PropTypes.bool.isRequired
-        })
-    ).isRequired,
-    onToggleComplete: PropTypes.func.isRequired,
-    onDeleteTask: PropTypes.func.isRequired
 };
 
 export default TaskList;

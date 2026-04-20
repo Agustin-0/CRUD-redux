@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import './TaskForm.css';
-import PropTypes from 'prop-types'
+import { addTask } from '../features/tasks/tasksSlice';
+import { useDispatch } from 'react-redux';
 
-const TaskForm = ({ onAddTask }) => {
+const TaskForm = () => {
   //estado de la tarea
   const [taskText, setTaskText] = useState("")
+  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     //evitamos que se refresque al pagina por comportamiento nativo
      e.preventDefault()
      //revisammos que taskText no este vacio!
      if(taskText.trim()) {
-      onAddTask(taskText.trim())
+      dispatch(addTask(taskText.trim()))
       //limpia el campo input del formulario
       setTaskText("")
      }
@@ -26,9 +28,5 @@ const TaskForm = ({ onAddTask }) => {
   )
 };
 
-// propTypes permite tipar las prop para prevenir enviar algo indeseado
-TaskForm.PropTypes = {
-  onAddTask: PropTypes.func.isRequired
-}
 
 export default TaskForm
